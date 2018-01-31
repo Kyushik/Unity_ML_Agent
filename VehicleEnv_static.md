@@ -16,13 +16,15 @@ This simulator is simple vehicle environment. In this environment, Agent should 
 
 
 
-**Actions** of the environments are as follows.
 
-The actions of the agent are as follows.
+
+**Actions** of the environments are as follows.
 
 - Move Left to a certain distance
 - Move Right to a certain distance
 - Stay current state
+
+
 
 
 

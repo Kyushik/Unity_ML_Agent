@@ -32,6 +32,7 @@ Some of the environment made by purchased models. In this case, it is hard to pr
 * CPU: Intel(R) Core(TM) i7-4790K CPU @ 4.00GHZ
 * GPU: GeForce GTX 1080Ti
 * Memory: 8GB
+* ​
 
 
 
