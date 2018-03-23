@@ -32,7 +32,8 @@ Some of the environment made by purchased models. In this case, it is hard to pr
 * CPU: Intel(R) Core(TM) i7-4790K CPU @ 4.00GHZ
 * GPU: GeForce GTX 1080Ti
 * Memory: 8GB
-* ​
+
+  ​
 
 
 
@@ -72,9 +73,41 @@ The download links of this environments are as follows.
 
 ---
 
+### Flappy Bird Style Game
+
+<img src="./Images/FlappyBird.png" width="500" alt="FlappyBird" />
+
+
+
+This is similar with famous game Flappy Bird.
+
+Yellow bird moves up and down. The bird has not to be collided with ground or columns. Also, if it goes above the screen, the game ends. 
+
+```
+The rules of the flappy bird are as follows.
++1 Reward
+- Agent moves through the columns: reward
+
+-1 Reward
+- Agent collide with columns
+- Agent collide with ground
+- Agent moves above the screen
+
+Terminal conditions
+- It is same with the -1 reward condition
+```
+
+The download links of this environments are as follows.
+
+- Flappy Bird Windows [Link](https://www.dropbox.com/s/724kc0i6ck1tpj6/ML_Agent_FlappyBird_Windows.zip?dl=0)
+- Flappy Bird Mac [Link](https://www.dropbox.com/s/eajorh7d4sxix6q/ML_Agent_FlappyBird_MAC.zip?dl=0)
+- Flappy Bird Linux [Link](https://www.dropbox.com/s/qiw8b6ts8vd6g1u/ML_Agent_FlappyBird_Linux.zip?dl=0)
+
+---
+
 ### Pong
 
-<img src="./Images/Pong_sample_img.PNG" width="500" alt="Pong" />
+<img src="D:\Unity_ML_Agents\Images\Pong_sample_img.PNG" width="500" alt="Pong" />
 
 
 
@@ -97,3 +130,4 @@ The download links of this environments are as follows.
 - Pong Windows [Link](https://www.dropbox.com/s/j7ib4k6f64gw1ft/ML_Agent_Pong_Windows.zip?dl=0)
 - Pong Mac [Link](https://www.dropbox.com/s/8dci73a65wa8kuu/ML_Agent_Pong_Mac.zip?dl=0)
 - Pong Linux [Link](https://www.dropbox.com/s/ren5lob8877iuby/ML_Agent_Pong_Linux.zip?dl=0)
+
