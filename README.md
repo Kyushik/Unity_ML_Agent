@@ -81,6 +81,8 @@ The download links of this environments are as follows.
 
 This is similar with famous game Flappy Bird.
 
+I implemented this game from [Unity Lecture](https://unity3d.com/kr/learn/tutorials/topics/2d-game-creation/project-goals?playlist=17093)
+
 Yellow bird moves up and down. The bird has not to be collided with ground or columns. Also, if it goes above the screen, the game ends. 
 
 ```
