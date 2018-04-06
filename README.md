@@ -30,10 +30,20 @@ Some of the environment made by purchased models. In this case, it is hard to pr
 
 **Hardware**
 * CPU: Intel(R) Core(TM) i7-4790K CPU @ 4.00GHZ
+
 * GPU: GeForce GTX 1080Ti
+
 * Memory: 8GB
 
   ​
+
+
+### Assets
+
+I added some assets for making ML-agents
+
+- ML-agents: It is basic ML-agent assets from [official ML-agents github](https://github.com/Unity-Technologies/ml-agents)
+- pong: assets for making pong 
 
 
 
