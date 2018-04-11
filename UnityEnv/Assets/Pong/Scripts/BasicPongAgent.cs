@@ -38,16 +38,14 @@ public class BasicPongAgent : Agent
 
 	private float bar_range = 50f;
 
-	public override List<float> CollectState()
+	public override void CollectObservations()
 	{
-		List<float> state = new List<float>();
-		state.Add(position);
-		return state;
+		AddVectorObs(position);
 	}
 
-	public override void AgentStep(float[] act)
+	public override void AgentStep(float[] vectorAction, string textAction)
 	{
-		float movement = act[0];
+		float movement = vectorAction[0];
 
 		// Actions: 
 		//         0 (s) -> Stop
@@ -73,24 +71,26 @@ public class BasicPongAgent : Agent
 		// if bar hits the ball, get reward +1
 		// if agent lose, get penalty -1
 
+		AddReward (0);
+
 		if (is_hit_ball)
 		{
-			reward = 1f;
+			AddReward(1f);
 			is_hit_ball = false;
 		}
 
 		if (is_lose)
 		{
-			done = true;
-			reward = -1f;
+			AddReward(-1f);
 			is_lose = false;
+			Done();
 		}
 
 		if (is_win)
 		{
-			done = true;
-			reward = 1f;
+			AddReward(1f);
 			is_win = false;
+			Done();
 		}
 
 	}

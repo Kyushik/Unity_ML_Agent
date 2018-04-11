@@ -38,12 +38,12 @@ Some of the environment made by purchased models. In this case, it is hard to pr
   ​
 
 
-### Assets
+### UnityEnv
 
-I added some assets for making ML-agents
+I added some environments and assets for making ML-agents
 
-- ML-agents: It is basic ML-agent assets from [official ML-agents github](https://github.com/Unity-Technologies/ml-agents)
-- pong: assets for making pong 
+- ML-agents: It is basic ML-agent v0.3 environment from [official ML-agents github](https://github.com/Unity-Technologies/ml-agents)
+- Assets: assets for making games 
 
 
 
