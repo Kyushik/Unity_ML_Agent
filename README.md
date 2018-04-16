@@ -49,6 +49,30 @@ I added some environments and assets for making ML-agents
 
 ## Unity ML Environments
 
+### Vehicle Environment(Dynamic Obstacles)
+
+<img src="D:\Unity_ML_Agents\Images\Vehicle_environment_dynamic.PNG" width="500" alt="Vehicle_Simulator_StaticObs" />
+
+ 
+
+ The agent of this environment is vehicle. Obstacles are other 8 different kind of vehicles. If vehicle hits other vehicle, it gets minus reward and game restarts. If vehicle hits start, it gets plus reward and game goes on.  The specific description of the environment is as follows.
+
+
+
+Above demo, referenced papers to implement algorithm are as follows.
+
+- [Dueling Network Architectures for Deep Reinforcement Learning](https://arxiv.org/abs/1511.06581)
+
+
+
+The download links of this environments are as follows.
+
+- Vehicle Environment Dynamic Obs Windows [Link](https://www.dropbox.com/s/cnhe9ip7e7hviff/ML_Agent_VehicleEnvironment_dynamic_windows.zip?dl=0)
+- Vehicle Environment Dynamic Obs Mac [Link](https://www.dropbox.com/s/7bk6ffp6jmg4je3/ML_Agent_VehicleEnvironment_dynamic_mac.zip?dl=0)
+- Vehicle Environment Dynamic Obs Linux [Link](https://www.dropbox.com/s/i4qghzby3jmz6nz/ML_Agent_VehicleEnvironment_dynamic_linux.zip?dl=0)
+
+---
+
 ### Vehicle Environment(Static Obstacles)
 
 <img src="./Images/Vehicle_Simulator_static_sample_img.jpg" width="500" alt="Vehicle_Simulator_StaticObs" />
