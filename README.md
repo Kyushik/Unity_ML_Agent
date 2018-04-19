@@ -65,7 +65,8 @@ Above demo, referenced papers to implement algorithm are as follows.
 
 
 
-The download links of this environments are as follows.
+
+Download links of this environments are as follows.
 
 - Vehicle Environment Dynamic Obs Windows [Link](https://www.dropbox.com/s/cnhe9ip7e7hviff/ML_Agent_VehicleEnvironment_dynamic_windows.zip?dl=0)
 - Vehicle Environment Dynamic Obs Mac [Link](https://www.dropbox.com/s/7bk6ffp6jmg4je3/ML_Agent_VehicleEnvironment_dynamic_mac.zip?dl=0)
@@ -78,6 +79,10 @@ The download links of this environments are as follows.
 <img src="./Images/Vehicle_Simulator_static_sample_img.jpg" width="500" alt="Vehicle_Simulator_StaticObs" />
 
  
+
+Yeah~~ This environment won [ML-Agents Challenge](https://blogs.unity3d.com/kr/2018/02/28/introducing-the-winners-of-the-first-ml-agents-challenge/?_ga=2.161712891.672728060.1524014504-1436221211.1493602207)!!! :crown:
+
+
 
  The agent of this environment is vehicle. Obstacles are static tire barriers. If vehicle hits obstacle, it gets minus reward and game restarts. If vehicle hits start, it gets plus reward and game goes on.  The specific description of the environment is as follows.
 
@@ -99,7 +104,7 @@ Above demo, referenced papers to implement algorithm are as follows.
 
 
 
-The download links of this environments are as follows.
+Download links of this environments are as follows.
 
 - Car Game Static Obs Windows [Link](https://www.dropbox.com/s/eaxq55kjm80nnsp/ML_Agent_VehicleEnvironment_static_windows.zip?dl=0)
 - Car Game Static Obs Mac [Link](https://www.dropbox.com/s/8gl0fa11rbwvqaz/ML_Agent_VehicleEnvironment_static_mac.zip?dl=0)
@@ -133,7 +138,9 @@ Terminal conditions
 - It is same with the -1 reward condition
 ```
 
-The download links of this environments are as follows.
+
+
+Download links of this environments are as follows.
 
 - Flappy Bird Windows [Link](https://www.dropbox.com/s/724kc0i6ck1tpj6/ML_Agent_FlappyBird_Windows.zip?dl=0)
 - Flappy Bird Mac [Link](https://www.dropbox.com/s/eajorh7d4sxix6q/ML_Agent_FlappyBird_MAC.zip?dl=0)
@@ -161,7 +168,9 @@ Terminal conditions
 - Agent hit the ball 5 time in a row
 ```
 
-The download links of this environments are as follows.
+
+
+Download links of this environments are as follows.
 
 - Pong Windows [Link](https://www.dropbox.com/s/j7ib4k6f64gw1ft/ML_Agent_Pong_Windows.zip?dl=0)
 - Pong Mac [Link](https://www.dropbox.com/s/8dci73a65wa8kuu/ML_Agent_Pong_Mac.zip?dl=0)
