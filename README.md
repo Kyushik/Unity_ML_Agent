@@ -49,9 +49,25 @@ I added some environments and assets for making ML-agents
 
 ## Unity ML Environments
 
+### Deep Q Learning Based High Level Driving Policy Determination
+
+<img src="./Images/Simulator_sample.PNG" width="500" alt="Vehicle_Simulator_StaticObs" />
+
+
+
+This project was one of the project of [Machine Learning Camp Jeju 2017](http://mlcampjeju.kakao.com/).
+
+After the camp, simulator was changed to [Unity ML-Agents](https://unity3d.com/machine-learning). Also, I wrote a paper about this project and it accepted to [Intelligent Vehicle Symposium 2018](http://www.2018iv.org/)
+
+The Repository link of this project as follows. 
+
+[Repository Link!!!](https://github.com/MLJejuCamp2017/DRL_based_SelfDrivingCarControl)
+
+
+
 ### Vehicle Environment(Dynamic Obstacles)
 
-<img src="D:\Unity_ML_Agents\Images\Vehicle_environment_dynamic.PNG" width="500" alt="Vehicle_Simulator_StaticObs" />
+<img src="./Images/Vehicle_environment_dynamic.PNG" width="500" alt="Vehicle_Simulator_DynamicObs" />
 
  
 
