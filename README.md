@@ -63,7 +63,7 @@ The Repository link of this project as follows.
 
 [Repository Link!!!](https://github.com/MLJejuCamp2017/DRL_based_SelfDrivingCarControl)
 
-
+---
 
 ### Vehicle Environment(Dynamic Obstacles)
 
@@ -166,7 +166,7 @@ Download links of this environments are as follows.
 
 ### Pong
 
-<img src="D:\Unity_ML_Agents\Images\Pong_sample_img.PNG" width="500" alt="Pong" />
+<img src="./Images/Pong_sample_img.PNG" width="500" alt="Pong" />
 
 
 
