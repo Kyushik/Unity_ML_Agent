@@ -21,31 +21,22 @@ Some of the environment made by purchased models. In this case, it is hard to pr
 ### Environment
 
 **Software**
-* Windows7 (64bit), Ubuntu16.04
-* Python 3.5.2
+* Windows10 (64bit), Ubuntu16.04
+* Python 3.6.5
 * Anaconda 4.2.0
-* Tensorflow-gpu 1.3.0
+* Tensorflow-gpu 1.12.0
 * Unity version 2017.2.0f3 Personal
-* opencv3 3.1.0
+* Unity ML-Agents: 0.8.1
 
 **Hardware**
+
 * CPU: Intel(R) Core(TM) i7-4790K CPU @ 4.00GHZ
 
 * GPU: GeForce GTX 1080Ti
 
 * Memory: 8GB
 
-  ​
-
-
-### UnityEnv
-
-I added some environments and assets for making ML-agents
-
-- ML-agents: It is basic ML-agent v0.3 environment from [official ML-agents github](https://github.com/Unity-Technologies/ml-agents)
-- Assets: assets for making games 
-
-
+  
 
 ## Unity ML Environments
 
@@ -57,7 +48,12 @@ I added some environments and assets for making ML-agents
 
 This project was one of the project of [Machine Learning Camp Jeju 2017](http://mlcampjeju.kakao.com/).
 
-After the camp, simulator was changed to [Unity ML-Agents](https://unity3d.com/machine-learning). Also, I wrote a paper about this project and it accepted to [Intelligent Vehicle Symposium 2018](http://www.2018iv.org/)
+After the camp, simulator was changed to [Unity ML-Agents](https://unity3d.com/machine-learning). 
+
+Published papers using the environment
+
+- [2018 IEEE Intelligent Vehicle Symposium](https://ieeexplore.ieee.org/abstract/document/8500645)
+- [Transaction on Intelligent Vehicles](https://ieeexplore.ieee.org/abstract/document/8723635)
 
 The Repository link of this project as follows. 
 
@@ -75,20 +71,15 @@ The Repository link of this project as follows.
 
 
 
+**Demo video: **  [youtube link](https://www.youtube.com/watch?v=n3GD2OjM2_k) 
+
+
+
 Above demo, referenced papers to implement algorithm are as follows.
 
 - [Dueling Network Architectures for Deep Reinforcement Learning](https://arxiv.org/abs/1511.06581)
 
 
-
-
-Download links of this environments are as follows.
-
-- Vehicle Environment Dynamic Obs Windows [Link](https://www.dropbox.com/s/cnhe9ip7e7hviff/ML_Agent_VehicleEnvironment_dynamic_windows.zip?dl=0)
-- Vehicle Environment Dynamic Obs Mac [Link](https://www.dropbox.com/s/7bk6ffp6jmg4je3/ML_Agent_VehicleEnvironment_dynamic_mac.zip?dl=0)
-- Vehicle Environment Dynamic Obs Linux [Link](https://www.dropbox.com/s/i4qghzby3jmz6nz/ML_Agent_VehicleEnvironment_dynamic_linux.zip?dl=0)
-
----
 
 ### Vehicle Environment(Static Obstacles)
 
@@ -96,20 +87,19 @@ Download links of this environments are as follows.
 
  
 
-Yeah~~ This environment won [ML-Agents Challenge](https://blogs.unity3d.com/kr/2018/02/28/introducing-the-winners-of-the-first-ml-agents-challenge/?_ga=2.161712891.672728060.1524014504-1436221211.1493602207)!!! :crown:
+This environment won [ML-Agents Challenge](https://blogs.unity3d.com/kr/2018/02/28/introducing-the-winners-of-the-first-ml-agents-challenge/?_ga=2.161712891.672728060.1524014504-1436221211.1493602207)!!! :crown:
 
 
 
  The agent of this environment is vehicle. Obstacles are static tire barriers. If vehicle hits obstacle, it gets minus reward and game restarts. If vehicle hits start, it gets plus reward and game goes on.  The specific description of the environment is as follows.
 
-- [Specific description of the environment](https://github.com/Kyushik/Unity_ML_Agent/blob/master/VehicleEnv_static.md)
+- [Specific description of the environment](https://github.com/Kyushik/Unity_ML_Agent/blob/master/docs/VehicleEnv_static.md)
 
 
 
+**Demo video: **  [youtube link](https://youtu.be/-LbuCPwiSVY) 
 
-Sample video of this game is as follows.
 
-Game demo [youtube video](https://youtu.be/-LbuCPwiSVY) 
 
 Above demo, referenced papers to implement algorithm are as follows.
 
@@ -117,14 +107,6 @@ Above demo, referenced papers to implement algorithm are as follows.
 - [Deep Reinforcement Learning with Double Q-learning](https://arxiv.org/abs/1509.06461)
 
 
-
-
-
-Download links of this environments are as follows.
-
-- Car Game Static Obs Windows [Link](https://www.dropbox.com/s/eaxq55kjm80nnsp/ML_Agent_VehicleEnvironment_static_windows.zip?dl=0)
-- Car Game Static Obs Mac [Link](https://www.dropbox.com/s/8gl0fa11rbwvqaz/ML_Agent_VehicleEnvironment_static_mac.zip?dl=0)
-- Car Game Static Obs Linux [Link](https://www.dropbox.com/s/1ubddebgl11ggft/ML_Agent_VehicleEnvironment_static_linux.zip?dl=0)
 
 ---
 
