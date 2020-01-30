@@ -6,15 +6,11 @@ This is repository for **Unity Machine Learning Agent** and **Reinforcement Lear
 
 Unity release awesome tool for making reinforcement learning environment! [Unity Machine Learning](https://unity3d.com/machine-learning)
 
-I usually make 2D RL environment with [pygame](http://www.pygame.org/news). [pygame environment repository](https://github.com/Kyushik/DRL)
-
-Thanks to Unity, I am trying to make some 3D RL Environments.
-
-I wrote summary of RL algorithms in [pygame environment repository](https://github.com/Kyushik/DRL)
+[pygame environment repository](https://github.com/Kyushik/DRL)
 
 
 
-Some of the environment made by purchased models. In this case, it is hard to provide raw unity codes. However, there are some simple environments which are made by simple or free model. I will provide raw unity codes for those environments if I solve the capacity problem.
+Some of the environment made by purchased models. In this case, it is hard to provide unity codes. However, there are some simple environments which are made by simple or free model. I will provide unity codes for those environments.
 
 
 
@@ -79,7 +75,7 @@ Above demo, referenced papers to implement algorithm are as follows.
 
 - [Dueling Network Architectures for Deep Reinforcement Learning](https://arxiv.org/abs/1511.06581)
 
-
+---
 
 ### Vehicle Environment(Static Obstacles)
 
