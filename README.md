@@ -65,6 +65,13 @@ The Repository link of this project as follows.
 
  The agent of this environment is vehicle. Obstacles are other 8 different kind of vehicles. If vehicle hits other vehicle, it gets minus reward and game restarts. If vehicle hits start, it gets plus reward and game goes on.  The specific description of the environment is as follows.
 
+```
+- State: Game View (80x80x1 grayscale image)
+- Action: 3 Actions (Left, Right, stay)
+- Reward 
+	- Driving at the center of the lane: +1 (linearly decrease)
+	- Collide with other vehicles (-10)
+```
 
 
 **Demo video:**  [youtube link](https://www.youtube.com/watch?v=n3GD2OjM2_k) 
@@ -101,8 +108,6 @@ Above demo, referenced papers to implement algorithm are as follows.
 
 - [Noisy Networks for Exploration](https://arxiv.org/abs/1706.10295)
 - [Deep Reinforcement Learning with Double Q-learning](https://arxiv.org/abs/1509.06461)
-
-
 
 ---
 
