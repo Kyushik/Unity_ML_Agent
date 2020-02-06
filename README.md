@@ -67,7 +67,7 @@ The Repository link of this project as follows.
 
 
 
-**Demo video: **  [youtube link](https://www.youtube.com/watch?v=n3GD2OjM2_k) 
+**Demo video:**  [youtube link](https://www.youtube.com/watch?v=n3GD2OjM2_k) 
 
 
 
@@ -93,7 +93,7 @@ This environment won [ML-Agents Challenge](https://blogs.unity3d.com/kr/2018/02/
 
 
 
-**Demo video: **  [youtube link](https://youtu.be/-LbuCPwiSVY) 
+**Demo video:**  [youtube link](https://youtu.be/-LbuCPwiSVY) 
 
 
 
