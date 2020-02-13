@@ -19,13 +19,13 @@ mem_maxlen = 50000
 discount_factor = 0.99
 learning_rate = 0.00025
 
-skip_frame = 5
+skip_frame = 4
 stack_frame = 4
 
-run_episode = 5000
-test_episode = 50
+run_episode = 2500
+test_episode = 100
 
-start_train_episode = 100
+start_train_episode = 250
 
 target_update_step = 10000
 print_interval = 20
@@ -37,7 +37,7 @@ epsilon_min = 0.1
 date_time = datetime.datetime.now().strftime("%Y%m%d-%H-%M-%S")
 
 # 유니티 환경 경로 
-game = "VehicleDynamicObs"
+game = "Pong"
 env_name = "../env/" + game + "/Windows/" + game
 
 # 모델 저장 및 불러오기 경로
