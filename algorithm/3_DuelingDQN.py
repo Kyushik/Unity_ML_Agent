@@ -41,8 +41,8 @@ game = "VehicleDynamicObs"
 env_name = "../env/" + game + "/Windows/" + game
 
 # 모델 저장 및 불러오기 경로
-save_path = "../saved_models/" + game + "/" + date_time + "_DQN"
-load_path = "../saved_models/" + game + "/20190828-10-42-45_DQN/model/model"
+save_path = "../saved_models/" + game + "/" + date_time + "_DuelingDQN"
+load_path = "../saved_models/" + game + "/20190828-10-42-45_DuelingDQN/model/model"
 
 # Model 클래스 -> 함성곱 신경망 정의 및 손실함수 설정, 네트워크 최적화 알고리즘 결정
 class Model():
@@ -66,8 +66,17 @@ class Model():
  
             self.flat = tf.layers.flatten(self.conv3)
 
-            self.fc1 = tf.layers.dense(self.flat,512,activation=tf.nn.relu)
-            self.Q_Out = tf.layers.dense(self.fc1, action_size, activation=None)
+            self.fc1_s = tf.layers.dense(self.flat,512,activation=tf.nn.relu)
+            self.fc1_a = tf.layers.dense(self.flat,512,activation=tf.nn.relu)
+            
+            self.fc2_s = tf.layers.dense(self.fc1_s, 1)
+            self.fc2_a = tf.layers.dense(self.fc1_a, action_size)
+
+            self.fc2_a_mean = tf.tile(tf.reduce_mean(self.fc2_a, axis=-1, keepdims=True), [1, action_size])
+            self.fc2_adv = tf.subtract(self.fc2_a, self.fc2_a_mean)
+
+            self.Q_Out = tf.add(self.fc2_s, self.fc2_adv)
+
         self.predict = tf.argmax(self.Q_Out, 1)
 
         self.target_Q = tf.placeholder(shape=[None, action_size], dtype=tf.float32)

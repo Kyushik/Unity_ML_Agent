@@ -41,8 +41,8 @@ game = "VehicleDynamicObs"
 env_name = "../env/" + game + "/Windows/" + game
 
 # 모델 저장 및 불러오기 경로
-save_path = "../saved_models/" + game + "/" + date_time + "_DQN"
-load_path = "../saved_models/" + game + "/20190828-10-42-45_DQN/model/model"
+save_path = "../saved_models/" + game + "/" + date_time + "_NoisyNet"
+load_path = "../saved_models/" + game + "/20190828-10-42-45_NoisyNet/model/model"
 
 # Model 클래스 -> 함성곱 신경망 정의 및 손실함수 설정, 네트워크 최적화 알고리즘 결정
 class Model():
@@ -55,19 +55,25 @@ class Model():
         # CNN Network 구축 -> 3개의 Convolutional layer와 2개의 Fully connected layer
         with tf.variable_scope(name_or_scope=model_name):
             self.conv1 = tf.layers.conv2d(inputs=self.input_normalize, filters=32, 
-                                          activation=tf.nn.relu, kernel_size=[8,8], 
-                                          strides=[4,4], padding="SAME")
+                                            activation=tf.nn.relu, kernel_size=[8,8], 
+                                            strides=[4,4], padding="SAME")
             self.conv2 = tf.layers.conv2d(inputs=self.conv1, filters=64, 
-                                          activation=tf.nn.relu, kernel_size=[4,4],
-                                          strides=[2,2],padding="SAME")
+                                            activation=tf.nn.relu, kernel_size=[4,4],
+                                            strides=[2,2],padding="SAME")
             self.conv3 = tf.layers.conv2d(inputs=self.conv2, filters=64, 
-                                          activation=tf.nn.relu, kernel_size=[3,3],
-                                          strides=[1,1],padding="SAME")
- 
+                                            activation=tf.nn.relu, kernel_size=[3,3],
+                                            strides=[1,1],padding="SAME")
+
             self.flat = tf.layers.flatten(self.conv3)
 
-            self.fc1 = tf.layers.dense(self.flat,512,activation=tf.nn.relu)
-            self.Q_Out = tf.layers.dense(self.fc1, action_size, activation=None)
+            ########################################### Noisy Network ###########################################
+            # 학습 여부 bool 형태로 받아오기 
+            self.is_train = tf.placeholder(tf.bool)
+
+            self.fc1 = tf.nn.relu(self.noisy_dense(self.flat, [self.flat.shape[1], 512], self.is_train))
+            self.Q_Out = self.noisy_dense(self.fc1, [512, action_size], self.is_train)
+            #####################################################################################################
+
         self.predict = tf.argmax(self.Q_Out, 1)
 
         self.target_Q = tf.placeholder(shape=[None, action_size], dtype=tf.float32)
@@ -76,6 +82,31 @@ class Model():
         self.loss = tf.losses.huber_loss(self.target_Q, self.Q_Out)
         self.UpdateModel = tf.train.AdamOptimizer(learning_rate).minimize(self.loss)
         self.trainable_var = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, model_name)
+
+    ########################################### Noisy Network ###########################################
+    def mu_variable(self, shape):
+        return tf.Variable(tf.random_uniform(shape, minval = -tf.sqrt(3/shape[0]), maxval = tf.sqrt(3/shape[0])))
+
+    def sigma_variable(self, shape):
+        return tf.Variable(tf.constant(0.017, shape = shape))
+
+    def noisy_dense(self, input_, input_shape, is_train):
+        # NoisyNet 변수 정의
+        mu_w  = self.mu_variable(input_shape)
+        sig_w = self.sigma_variable(input_shape)
+        mu_b  = self.mu_variable([input_shape[1]])
+        sig_b = self.sigma_variable([input_shape[1]])
+
+        # 변수들에 대한 Epsilon 계산
+        eps_w = tf.cond(is_train, lambda: tf.random_normal(input_shape), lambda: tf.zeros(input_shape))
+        eps_b = tf.cond(is_train, lambda: tf.random_normal([input_shape[1]]), lambda: tf.zeros([input_shape[1]]))
+
+        # FC 연산 수행 
+        w_fc = tf.add(mu_w, tf.multiply(sig_w, eps_w))
+        b_fc = tf.add(mu_b, tf.multiply(sig_b, eps_b))
+
+        return tf.matmul(input_, w_fc) + b_fc
+    #####################################################################################################
 
 # DQNAgent 클래스 -> DQN 알고리즘을 위한 다양한 함수 정의 
 class DQNAgent():
@@ -87,7 +118,7 @@ class DQNAgent():
 
         self.memory = deque(maxlen=mem_maxlen)
         self.obs_set = deque(maxlen=skip_frame*stack_frame)
-   
+
         self.sess = tf.Session()
         self.init = tf.global_variables_initializer()
         self.sess.run(self.init)
@@ -109,7 +140,8 @@ class DQNAgent():
             return np.random.randint(0, action_size)
         else:
             # 네트워크 연산에 따라 행동 결정
-            predict = self.sess.run(self.model.predict, feed_dict={self.model.input: [state]})
+            predict = self.sess.run(self.model.predict, feed_dict={self.model.input: [state],
+                                                                   self.model.is_train: False})
             return np.asscalar(predict)
 
     # 프레임을 skip하면서 설정에 맞게 stack
@@ -156,9 +188,9 @@ class DQNAgent():
             dones.append(mini_batch[i][4])
 
         # 타겟값 계산 
-        target = self.sess.run(self.model.Q_Out, feed_dict={self.model.input: states})
+        target = self.sess.run(self.model.Q_Out, feed_dict={self.model.input: states, self.model.is_train: True})
         target_val = self.sess.run(self.target_model.Q_Out, 
-                                   feed_dict={self.target_model.input: next_states})
+                                    feed_dict={self.target_model.input: next_states, self.model.is_train: True})
 
         for i in range(batch_size):
             if dones[i]:
@@ -169,7 +201,8 @@ class DQNAgent():
         # 학습 수행 및 손실함수 값 계산 
         _, loss = self.sess.run([self.model.UpdateModel, self.model.loss],
                                 feed_dict={self.model.input: states, 
-                                           self.model.target_Q: target})
+                                           self.model.target_Q: target,
+                                           self.model.is_train: True})
         return loss
 
     # 타겟 네트워크 업데이트 
@@ -187,11 +220,11 @@ class DQNAgent():
         Merge = tf.summary.merge_all()
 
         return Summary, Merge
-    
+
     def Write_Summray(self, reward, loss, episode):
         self.Summary.add_summary(
             self.sess.run(self.Merge, feed_dict={self.summary_loss: loss, 
-                                                 self.summary_reward: reward}), episode)
+                                                    self.summary_reward: reward}), episode)
 
 # Main 함수 -> 전체적으로 DQN 알고리즘을 진행 
 if __name__ == '__main__':

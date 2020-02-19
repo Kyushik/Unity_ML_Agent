@@ -34,6 +34,12 @@ save_interval = 5000
 epsilon_init = 1.0
 epsilon_min = 0.1
 
+# Parameters for PER
+eps = 0.00001
+
+alpha = 0.6
+beta_init = 0.4
+
 date_time = datetime.datetime.now().strftime("%Y%m%d-%H-%M-%S")
 
 # 유니티 환경 경로 
@@ -41,8 +47,8 @@ game = "VehicleDynamicObs"
 env_name = "../env/" + game + "/Windows/" + game
 
 # 모델 저장 및 불러오기 경로
-save_path = "../saved_models/" + game + "/" + date_time + "_DQN"
-load_path = "../saved_models/" + game + "/20190828-10-42-45_DQN/model/model"
+save_path = "../saved_models/" + game + "/" + date_time + "_PER"
+load_path = "../saved_models/" + game + "/20190828-10-42-45_PER/model/model"
 
 # Model 클래스 -> 함성곱 신경망 정의 및 손실함수 설정, 네트워크 최적화 알고리즘 결정
 class Model():
@@ -72,8 +78,15 @@ class Model():
 
         self.target_Q = tf.placeholder(shape=[None, action_size], dtype=tf.float32)
 
-        # 손실함수 값 계산 및 네트워크 학습 수행 
-        self.loss = tf.losses.huber_loss(self.target_Q, self.Q_Out)
+        ################################################### PER ###########################################################
+        # w 받아오기, TD_error 계산하기, 손실함수 구하기 
+        self.w_is = tf.placeholder(tf.float32, shape = [None])
+        self.TD_error = tf.reduce_sum(tf.subtract(self.Q_Out, self.target_Q), axis=1)
+        
+        self.loss = tf.reduce_mean(tf.multiply(self.w_is, tf.square(self.TD_error)))
+        ###################################################################################################################
+
+        # 네트워크 학습 수행 
         self.UpdateModel = tf.train.AdamOptimizer(learning_rate).minimize(self.loss)
         self.trainable_var = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, model_name)
 
@@ -94,11 +107,15 @@ class DQNAgent():
 
         self.epsilon = epsilon_init
 
+        # PER parameters
+        self.beta = beta_init
+        self.TD_list = np.array([])
+
         self.Saver = tf.train.Saver()
         self.Summary, self.Merge = self.Make_Summary()
 
         self.update_target()
-
+        
         if load_model == True:
             self.Saver.restore(self.sess, load_path)
 
@@ -128,6 +145,9 @@ class DQNAgent():
     def append_sample(self, state, action, reward, next_state, done):
         self.memory.append((state, action, reward, next_state, done))
 
+        # 해당 데이터에 대한 TD 에러 연산 및 TD_list에 저장
+        self.append_TD_list(state, action, reward, next_state, done)
+
     # 네트워크 모델 저장 
     def save_model(self):
         self.Saver.save(self.sess, save_path + "/model/model")
@@ -140,7 +160,7 @@ class DQNAgent():
                 self.epsilon -= 1 / (run_episode - start_train_episode)
 
         # 학습을 위한 미니 배치 데이터 샘플링
-        mini_batch = random.sample(self.memory, batch_size)
+        mini_batch, w_batch, batch_index = self.get_PER_minibatch()
 
         states = []
         actions = []
@@ -167,9 +187,13 @@ class DQNAgent():
                 target[i][actions[i]] = rewards[i] + discount_factor * np.amax(target_val[i])
 
         # 학습 수행 및 손실함수 값 계산 
-        _, loss = self.sess.run([self.model.UpdateModel, self.model.loss],
-                                feed_dict={self.model.input: states, 
-                                           self.model.target_Q: target})
+        _, loss, TD_error_batch = self.sess.run([self.model.UpdateModel, self.model.loss, self.model.TD_error],
+                                                 feed_dict={self.model.input: states, 
+                                                            self.model.target_Q: target,
+                                                            self.model.w_is: w_batch})
+
+        self.update_TD_list(TD_error_batch, batch_index, done)
+
         return loss
 
     # 타겟 네트워크 업데이트 
@@ -192,6 +216,57 @@ class DQNAgent():
         self.Summary.add_summary(
             self.sess.run(self.Merge, feed_dict={self.summary_loss: loss, 
                                                  self.summary_reward: reward}), episode)
+
+    def append_TD_list(self, state, action, reward, next_state, done):
+        # TD error의 데이터 길이가 mem_maxlen보다 길면 초기 데이터 제거 
+        if len(self.TD_list) > mem_maxlen:
+            self.TD_list = np.delete(self.TD_list, 0)
+
+        # Memory에 저장할 데이터에 대한 TD Error 계산
+        target = self.sess.run(self.model.Q_Out, feed_dict={self.model.input: [state]})
+        target_val = self.sess.run(self.target_model.Q_Out, 
+                                    feed_dict={self.target_model.input: [next_state]})
+
+        if done:
+            target[0][action] = reward
+        else:
+            target[0][action] = reward + discount_factor * np.amax(target_val)
+
+        TD_error = np.sum(self.sess.run(self.model.TD_error, feed_dict = {self.model.target_Q: target, self.model.input: [state]}))
+
+        # TD list에 TD error에 대한 연산 수행 후 추가 
+        self.TD_list = np.append(self.TD_list, pow((abs(TD_error) + eps), alpha))
+
+    def get_PER_minibatch(self):
+        # TD list를 normalize
+        TD_normalized = self.TD_list / np.linalg.norm(self.TD_list, 1)
+        TD_sum = np.cumsum(TD_normalized)
+
+        # importance sampling weight 계산
+        weight_is = (len(self.memory) * TD_normalized) ** (-self.beta)
+        weight_is = weight_is / np.max(weight_is)
+
+        # Select mini batch and importance sampling weights
+        minibatch = []
+        batch_index = []
+        w_batch = []
+
+        for _ in range(batch_size):
+            rand_batch = random.random()
+            TD_index = np.nonzero(TD_sum >= rand_batch)[0][0]
+            batch_index.append(TD_index)
+            w_batch.append(weight_is[TD_index])
+            minibatch.append(self.memory[TD_index])
+
+        return minibatch, w_batch, batch_index 
+
+    def update_TD_list(self, TD_error_batch, batch_index, done):
+        for i, idx_batch in enumerate(batch_index):
+            self.TD_list[idx_batch] = pow((abs(TD_error_batch[i]) + eps), alpha)
+
+        # Update Beta
+        if done:
+            self.beta += (1 - beta_init) / (run_episode - start_train_episode)
 
 # Main 함수 -> 전체적으로 DQN 알고리즘을 진행 
 if __name__ == '__main__':
