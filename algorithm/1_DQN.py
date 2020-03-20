@@ -19,17 +19,17 @@ mem_maxlen = 50000
 discount_factor = 0.99
 learning_rate = 0.00025
 
-skip_frame = 5
+skip_frame = 4
 stack_frame = 4
 
-run_episode = 2500
-test_episode = 100
+run_step = 500000
+test_step = 100000
 
-start_train_episode = 100
+start_train_step = 50000
 
-target_update_step = 10000
-print_interval = 25
-save_interval = 5000
+target_update_step = 5000
+print_episode = 25
+save_step = 100000
 
 epsilon_init = 1.0
 epsilon_min = 0.1
@@ -37,12 +37,12 @@ epsilon_min = 0.1
 date_time = datetime.datetime.now().strftime("%Y%m%d-%H-%M-%S")
 
 # 유니티 환경 경로 
-game = "VehicleDynamicObs"
+game = "Breakout"
 env_name = "../env/" + game + "/Windows/" + game
 
 # 모델 저장 및 불러오기 경로
 save_path = "../saved_models/" + game + "/" + date_time + "_DQN"
-load_path = "../saved_models/" + game + "/20190828-10-42-45_DQN/model/model"
+load_path = "../saved_models/" + game + "/20200221-10-30-27_DQN/model/model"
 
 # Model 클래스 -> 함성곱 신경망 정의 및 손실함수 설정, 네트워크 최적화 알고리즘 결정
 class Model():
@@ -88,7 +88,9 @@ class DQNAgent():
         self.memory = deque(maxlen=mem_maxlen)
         self.obs_set = deque(maxlen=skip_frame*stack_frame)
    
-        self.sess = tf.Session()
+        config = tf.ConfigProto() 
+        config.gpu_options.allow_growth = True
+        self.sess = tf.Session(config=config)
         self.init = tf.global_variables_initializer()
         self.sess.run(self.init)
 
@@ -134,11 +136,6 @@ class DQNAgent():
 
     # 학습 수행 
     def train_model(self, done):
-        # Epsilon 값 감소 
-        if done:
-            if self.epsilon > epsilon_min:
-                self.epsilon -= 1 / (run_episode - start_train_episode)
-
         # 학습을 위한 미니 배치 데이터 샘플링
         mini_batch = random.sample(self.memory, batch_size)
 
@@ -162,9 +159,9 @@ class DQNAgent():
 
         for i in range(batch_size):
             if dones[i]:
-                target[i][actions[i]] = rewards[i]
+                target[i,actions[i]] = rewards[i]
             else:
-                target[i][actions[i]] = rewards[i] + discount_factor * np.amax(target_val[i])
+                target[i,actions[i]] = rewards[i] + discount_factor * np.amax(target_val[i])
 
         # 학습 수행 및 손실함수 값 계산 
         _, loss = self.sess.run([self.model.UpdateModel, self.model.loss],
@@ -206,6 +203,7 @@ if __name__ == '__main__':
     agent = DQNAgent()
 
     step = 0
+    episode = 0
     rewards = []
     losses = []
 
@@ -213,24 +211,22 @@ if __name__ == '__main__':
     env_info = env.reset(train_mode=train_mode)[default_brain]
 
     # 게임 진행 반복문 
-    for episode in range(run_episode + test_episode):
-        if episode == run_episode:
-            train_mode = False
-            env_info = env.reset(train_mode=train_mode)[default_brain]
-        
+    while step < run_step + test_step:      
         # 상태, episode_rewards, done 초기화 
         obs = 255 * np.array(env_info.visual_observations[0])
         episode_rewards = 0
         done = False
 
         for i in range(skip_frame*stack_frame):
-            agent.obs_set.append(np.zeros([state_size[0], state_size[1], state_size[2]]))
+            agent.obs_set.append(obs)
 
         state = agent.skip_stack_frame(step, obs)
 
         # 한 에피소드를 진행하는 반복문 
         while not done:
-            step += 1
+            if step == run_step:
+                train_mode = False
+                env_info = env.reset(train_mode=train_mode)[default_brain]
 
             # 행동 결정 및 유니티 환경에 행동 적용 
             action = agent.get_action(state)
@@ -253,8 +249,13 @@ if __name__ == '__main__':
 
             # 상태 정보 업데이트 
             state = next_state
+            step += 1
 
-            if episode > start_train_episode and train_mode:
+            if step > start_train_step and train_mode:
+                # Epsilon 감소 
+                if agent.epsilon > epsilon_min:
+                    agent.epsilon -= 1 / (run_step - start_train_step)
+
                 # 학습 수행 
                 loss = agent.train_model(done)
                 losses.append(loss)
@@ -263,21 +264,22 @@ if __name__ == '__main__':
                 if step % (target_update_step) == 0:
                     agent.update_target()
 
+            # 네트워크 모델 저장 
+            if step % save_step == 0 and step != 0:
+                agent.save_model()
+                print("Save Model: {}".format(save_path))
+
         rewards.append(episode_rewards)
+        episode += 1
 
         # 게임 진행 상황 출력 및 텐서 보드에 보상과 손실함수 값 기록 
-        if episode % print_interval == 0 and episode != 0:
+        if episode % print_episode == 0 and episode != 0:
             print("step: {} / episode: {} / reward: {:.2f} / loss: {:.4f} / epsilon: {:.3f}".format
                   (step, episode, np.mean(rewards), np.mean(losses), agent.epsilon))
             agent.Write_Summray(np.mean(rewards), np.mean(losses), episode)
             rewards = []
             losses = []
 
-        # 네트워크 모델 저장 
-        if episode % save_interval == 0 and episode != 0:
-            agent.save_model()
-            print("Save Model {}".format(episode))
-
     agent.save_model()
-    print("Save Model {}".format(episode))
+    print("Save Model: {}".format(save_path))
     env.close()

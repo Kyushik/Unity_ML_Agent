@@ -111,45 +111,39 @@ Above demo, referenced papers to implement algorithm are as follows.
 
 ---
 
-### Flappy Bird Style Game
+### Breakout
 
-<img src="./Images/FlappyBird.png" width="500" alt="FlappyBird" />
+<img src="./Images/Breakout.png" width="500" alt="FlappyBird" />
 
 
 
-This is similar with famous game Flappy Bird.
+This is breakout environment, which is popular environment for testing RL algorithm. 
 
-I implemented this game from [Unity Lecture](https://unity3d.com/kr/learn/tutorials/topics/2d-game-creation/project-goals?playlist=17093)
-
-Yellow bird moves up and down. The bird has not to be collided with ground or columns. Also, if it goes above the screen, the game ends. 
+The red bar (agent) moves left and right side to hit the ball. If the ball collides with a block, it breaks the block.  In every episode, ball is fired in random direction.
 
 ```
-The rules of the flappy bird are as follows.
+The rules of the breakout are as follows.
+- Visual Observation: 80x80 image  
+- Actions: 3 actions (left, stay, right)
+
 +1 Reward
-- Agent moves through the columns: reward
+- If ball breaks a block, the agent gets +1 reward 
 
 -1 Reward
-- Agent collide with columns
-- Agent collide with ground
-- Agent moves above the screen
+- If the agent misses the ball, the agent gets -1 reward
 
 Terminal conditions
-- It is same with the -1 reward condition
+- If the agent misses the ball 
+- If the agent breaks all the blocks 
 ```
 
 
-
-Download links of this environments are as follows.
-
-- Flappy Bird Windows [Link](https://www.dropbox.com/s/724kc0i6ck1tpj6/ML_Agent_FlappyBird_Windows.zip?dl=0)
-- Flappy Bird Mac [Link](https://www.dropbox.com/s/eajorh7d4sxix6q/ML_Agent_FlappyBird_MAC.zip?dl=0)
-- Flappy Bird Linux [Link](https://www.dropbox.com/s/qiw8b6ts8vd6g1u/ML_Agent_FlappyBird_Linux.zip?dl=0)
 
 ---
 
 ### Pong
 
-<img src="./Images/Pong_sample_img.PNG" width="500" alt="Pong" />
+<img src="./Images/pong.png" width="500" alt="Pong" />
 
 
 
@@ -159,19 +153,14 @@ Two bars have to hit the ball to win the game.  In my environment, left bar is `
 
 ```
 The rules of the pong are as follows.
-- Agent hits the ball: reward +1
+- Visual Observation: 40x80 image 
+- Vector Observation: 32 
+- Actions: 3 actions (up, stay, right)
+
+- Agent hits the ball: reward +0.5
 - Agent misses the ball: reward -1
 
 Terminal conditions
 - Agent misses the ball
-- Agent hit the ball 5 time in a row
+- After 1000 tiome steps, the episode ends
 ```
-
-
-
-Download links of this environments are as follows.
-
-- Pong Windows [Link](https://www.dropbox.com/s/j7ib4k6f64gw1ft/ML_Agent_Pong_Windows.zip?dl=0)
-- Pong Mac [Link](https://www.dropbox.com/s/8dci73a65wa8kuu/ML_Agent_Pong_Mac.zip?dl=0)
-- Pong Linux [Link](https://www.dropbox.com/s/ren5lob8877iuby/ML_Agent_Pong_Linux.zip?dl=0)
-
