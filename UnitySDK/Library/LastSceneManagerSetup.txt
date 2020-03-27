@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Pong/Pong.unity
+- path: Assets/Breakout/Breakout.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

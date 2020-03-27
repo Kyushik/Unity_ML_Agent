@@ -123,7 +123,7 @@ The red bar (agent) moves left and right side to hit the ball. If the ball colli
 
 ```
 The rules of the breakout are as follows.
-- Visual Observation: 80x80 image  
+- Visual Observation: 80x80x1 grayscale image  
 - Actions: 3 actions (left, stay, right)
 
 +1 Reward
@@ -153,7 +153,7 @@ Two bars have to hit the ball to win the game.  In my environment, left bar is `
 
 ```
 The rules of the pong are as follows.
-- Visual Observation: 40x80 image 
+- Visual Observation: 40x80x1 grayscale image 
 - Vector Observation: 32 
 - Actions: 3 actions (up, stay, right)
 
