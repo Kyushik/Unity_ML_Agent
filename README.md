@@ -162,5 +162,37 @@ The rules of the pong are as follows.
 
 Terminal conditions
 - Agent misses the ball
-- After 1000 tiome steps, the episode ends
+- After 1000 time steps, the episode ends
 ```
+
+
+
+---
+
+### Predator Prey (MultiAgent)
+
+<img src="./Images/Predator_Prey.png" width="800" alt="PP" />
+
+
+
+This is popular environment for testing **Multi Agent** deep reinforcement learning algorithms. The lions and a sheep are `agents`. Lions are predator, so they have to capture the sheep. Sheep is prey, so it has to run away from the lions.  
+
+```
+The rules of the Predator Prey are as follows.
+- Visual Observation: 80x80x3 image 
+- Vector Observation: 3 -> x position, z position, role(0: Prey, 1: Predator) 
+- Actions: 4 actions (up, down, left, right)
+
+Reward (Predator)
+- Every move: -0.01 
+- Predator captures the prey: +1 
+
+Reward (Prey)
+- Every move: +0.01
+- Predator captures the prey: -1
+
+Terminal conditions
+- Predator captures the prey 
+- After 500 steps
+```
+
