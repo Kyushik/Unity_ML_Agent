@@ -177,6 +177,10 @@ Terminal conditions
 
 This is popular environment for testing **Multi Agent** deep reinforcement learning algorithms. The lions and a sheep are `agents`. Lions are predator, so they have to capture the sheep. Sheep is prey, so it has to run away from the lions.  
 
+Number of the Lions can be changed from 1 to 6 using the following python code 
+
+<img src="./Images/numAgent.png" width="300" alt="PP" />
+
 ```
 The rules of the Predator Prey are as follows.
 - Visual Observation: 80x80x3 image 
