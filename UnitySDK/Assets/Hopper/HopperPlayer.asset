@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e9bda8f3cf1492fa74926a530f6f70, type: 3}
+  m_Name: HopperPlayer
+  m_EditorClassIdentifier: 
+  brainParameters:
+    vectorObservationSize: 19
+    numStackedVectorObservations: 4
+    vectorActionSize: 03000000
+    cameraResolutions: []
+    vectorActionDescriptions:
+    - Foot
+    - Leg1
+    - Leg2
+    vectorActionSpaceType: 1
+  keyContinuousPlayerActions: []
+  axisContinuousPlayerActions: []
+  discretePlayerActions: []
