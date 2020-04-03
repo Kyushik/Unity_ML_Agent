@@ -200,3 +200,33 @@ Terminal conditions
 - After 500 steps
 ```
 
+
+
+---
+
+### Hopper
+
+<img src="./Images/hopper.gif" width="500" alt="PP" />
+
+
+
+This is popular environment for testing **Continuous Action** deep reinforcement learning algorithms. The agent has to move to the right side.   
+
+```
+The rules of the Predator Prey are as follows.
+- Vector Observation: 19 * 4 (19 data * 4 stacks) 
+	- foot: x distance/50, local position (x,y,z), velocity (x, y), angular velocity (z)
+	- leg1: local position (x,y,z), velocity (x,y), angular velocity (z)
+	- leg2: local position (x,y,z), velocity (x,y), angular velocity (z)
+- Actions: 3 Continuous actions -> Torque(foot, leg1, leg2)
+
+Reward 
+- y position of leg2 < 0.8: -1
+- x potision of foot > 50: +1
+- (0.01 * foot x velocity) + (0.00001 * foot x distance) 
+
+Terminal conditions
+- Predator captures the prey 
+- After 500 steps
+```
+
