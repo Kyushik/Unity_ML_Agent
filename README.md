@@ -218,7 +218,7 @@ The rules of the Predator Prey are as follows.
 	- foot: x distance/50, local position (x,y,z), velocity (x, y), angular velocity (z)
 	- leg1: local position (x,y,z), velocity (x,y), angular velocity (z)
 	- leg2: local position (x,y,z), velocity (x,y), angular velocity (z)
-- Actions: 3 Continuous actions -> Torque(foot, leg1, leg2)
+- Actions: 3 Continuous actions (-1 ~ 1) -> Torque(foot, leg1, leg2)
 
 Reward 
 - y position of leg2 < 0.8: -1
@@ -226,7 +226,7 @@ Reward
 - (0.01 * foot x velocity) + (0.00001 * foot x distance) 
 
 Terminal conditions
-- Predator captures the prey 
-- After 500 steps
+- y position of leg2 < 0.8
+- x potision of foot > 50
 ```
 
