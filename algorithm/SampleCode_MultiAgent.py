@@ -55,12 +55,12 @@ if __name__ == '__main__':
         score = np.zeros([num_agent])
         done = False
 
+        env_info = env.reset(train_mode=train_mode)[brain_name]
+
         # 한 에피소드를 진행하는 반복문 
         while not done:
             if step == run_step:
                 train_mode = False
-            
-            env_info = env.reset(train_mode=train_mode)[brain_name]
 
             # 행동 결정 및 유니티 환경에 행동 적용
             action_list = []

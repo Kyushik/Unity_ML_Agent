@@ -1,15 +1,18 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - BallCollision
+    - BreakoutAcademy_multi
+    - BreakoutAgent_multi
     - GridAgent
-    - HopperAcademy
-    - HopperAgent
     - MLAgents.LearningBrain
-    - followAgent
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.TestListCacheData
+    UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
   sceneClasses:
-    Assets/Hopper/Hopper.unity:
+    Assets/Breakout_multipleEnv/Breakout_multi.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -51,22 +54,26 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9750}
+      Script: {instanceID: 9386}
     - Class: 114
-      Script: {instanceID: 10486}
+      Script: {instanceID: 9436}
     - Class: 114
-      Script: {instanceID: 11020}
+      Script: {instanceID: 9752}
     - Class: 114
-      Script: {instanceID: 11022}
+      Script: {instanceID: 9762}
     - Class: 114
-      Script: {instanceID: 11024}
+      Script: {instanceID: 9936}
+    - Class: 114
+      Script: {instanceID: 10494}
+    - Class: 114
+      Script: {instanceID: 10916}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
       Script: {instanceID: 0}
-    - Class: 136
+    - Class: 134
       Script: {instanceID: 0}
-    - Class: 153
+    - Class: 135
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -89,6 +96,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Dropdown
+  - hash:
+      serializedVersion: 2
+      Hash: 30ce2f183aa6e3a76237e742405931d7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HopperAgent
   - hash:
       serializedVersion: 2
       Hash: 9182123f27e53e94e65aba0268ee495c
@@ -721,6 +734,18 @@ ScriptsOnlyBuild:
     className: RandomDecision
   - hash:
       serializedVersion: 2
+      Hash: 9a758af4bbb65c4fa2c02c00703359b6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: followAgent
+  - hash:
+      serializedVersion: 2
+      Hash: 9182123f27e53e94e65aba0268ee495c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BreakoutAcademy_multi
+  - hash:
+      serializedVersion: 2
       Hash: 53b94d92e027cf8d25b27b6cdbbadc73
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -749,6 +774,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BallCollision_multi
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1018,6 +1049,12 @@ ScriptsOnlyBuild:
       Hash: 9182123f27e53e94e65aba0268ee495c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
+    className: HopperAcademy
+  - hash:
+      serializedVersion: 2
+      Hash: 9182123f27e53e94e65aba0268ee495c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
     className: BasicAcademy
   - hash:
       serializedVersion: 2
@@ -1117,6 +1154,12 @@ ScriptsOnlyBuild:
     className: Ball3DAgent
   - hash:
       serializedVersion: 2
+      Hash: 61db2ee6e59673e19c271b75d8ebb805
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BreakoutAgent_multi
+  - hash:
+      serializedVersion: 2
       Hash: 47db732cc34e93498587297f05b29efa
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1127,25 +1170,7 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 30ce2f183aa6e3a76237e742405931d7
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: HopperAgent
-  - hash:
-      serializedVersion: 2
-      Hash: 9a758af4bbb65c4fa2c02c00703359b6
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: followAgent
-  - hash:
-      serializedVersion: 2
-      Hash: 9182123f27e53e94e65aba0268ee495c
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: HopperAcademy
   platform: 24
   scenePathNames:
-  - Assets/Hopper/Hopper.unity
-  playerPath: D:/Github/Unity_ML_Agents_git/env/Hopper/Linux/Hopper.x86_64
+  - Assets/Breakout_multipleEnv/Breakout_multi.unity
+  playerPath: D:/Github/Unity_ML_Agents_git/env/Breakout_multi/Linux/Breakout_multi.x86_64

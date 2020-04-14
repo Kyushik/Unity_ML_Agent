@@ -138,12 +138,11 @@ public class BreakoutAgent : Agent {
 
         ball_vel_z = RbBall.velocity.z;
 
-        /*
+        //If agent hit the ball, reward = 0.1
         if (ball_vel_z > 0 && ball_vel_z_old < 0 && ball.transform.position.z < -2)
         {
             AddReward(0.1f);
         }
-        */
 
         ball_vel_z_old = ball_vel_z;
         count_blocks_old = count_blocks;

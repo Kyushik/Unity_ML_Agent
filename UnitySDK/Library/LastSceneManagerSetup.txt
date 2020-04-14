@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Hopper/Hopper.unity
+- path: Assets/Breakout_multipleEnv/Breakout_multi.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
